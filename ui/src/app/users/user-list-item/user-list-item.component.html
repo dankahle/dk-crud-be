@@ -1,0 +1,10 @@
+<div class="list" fxLayout="row" fxFlexAlign="space-between center">
+  <div fxFlex="1 1 auto">{{user.id}}</div>
+  <div fxFlex="1 1 auto">{{user.name}}</div>
+  <div fxFlex="1 1 auto">{{user.age}}</div>
+  <div fxFlex="1 1 auto">
+    <a href="" [routerLink]="['/user/:id', {id: user.id}]">edit</a>
+    <a href="" (click)="deleteUser($event)">delete</a>
+  </div>
+</div>
+

@@ -1,4 +1,5 @@
 const express = require('express'),
+  path = require('path'),
   bodyParser = require('body-parser'),
   apiErrorHandler = require('api-error-handler'),
   userRouter = require('./rest/user/router'),
@@ -28,21 +29,23 @@ app.use(function tap(req, res, next) {
   if (req.body && (req.body.query || req.body.mutation)) {
 
 
-    msg = msg + JSON.stringify(req.body, null, 2);
+    // msg = msg + JSON.stringify(req.body, null, 2);
 
     // msg = msg + req.body.query || req.body.mutation;
-/*
     if (req.body.query) {
       msg = msg + req.body.query.replace('\n', ' ').substr(0, 30);
     }
     if (req.body.mutatation) {
       msg = msg + req.body.mutation.replace('\n', ' ').substr(0, 30);
     }
-*/
+    console.log(msg);
+  } else {
     console.log(msg);
   }
   next();
 })
+
+app.use(express.static(path.resolve(__dirname, '../ui/dist')));
 
 app.use('/api/users', userRouter);
 app.use('/api/graphql', graphqlHTTP({
@@ -55,6 +58,11 @@ app.use('/api/graphql', graphqlHTTP({
     path: error.path
   })
 }));
+
+app.get(['/', '/user', '/user/**'], (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../ui/dist') + '/index.html');
+});
+
 
 app.use(function (req, res) {
   res.status(404).send('Oops, file not found')

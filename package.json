@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/flex-layout": "^5.0.0-beta.14",
     "api-error-handler": "^1.0.0",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
@@ -20,8 +21,7 @@
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
     "lodash": "^4.17.5",
-    "mongoose": "^5.0.12",
-    "rxjs": "^5.5.6"
+    "mongoose": "^5.0.12"
   },
   "devDependencies": {}
 }

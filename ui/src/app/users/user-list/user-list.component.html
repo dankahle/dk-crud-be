@@ -1,0 +1,6 @@
+<h3>User List</h3>
+<div class="list">
+  <dk-user-list-item *ngFor="let user of users" [user]="user" (delete)="deleteUser($event)"></dk-user-list-item>
+</div>
+<!--<a href="" [routerLink]="['/user/:id', {id: 'add'}]">Add</a>-->
+<a href="" routerLink="/user/add">Add</a>

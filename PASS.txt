@@ -1,84 +1,9 @@
 
 
-readme
-* to use resolves or not? if needed, then need a refresh query in page for updates (delete in list page),
-  doesn't matter as just gets from cache right? Should at least.
 
-todo:
-* toss all those catch's in apollo.query/mutation? See if they're even being hit, yeah being hit, but with 500 and
-  even htough they have graphql errors, the graphqlErrors member is empty for some reason. Maybe nee a globl
-  query/watchQuery/mutation errors setting, see apollo doc for values
-* passing user instead of userInput in update mutation causes a 500 with errors, but you don't see
-  anything on server for that. All handled by errorHandler middleware I guess, but should log on that right?
-  You need to log in errorHandler, but probably do in mean.io
-* error dialog that looks for http error AND graphql errors, so 2 interceptors, one for each I figure, maybe
-  can be combined.
-* need to ditch resolves if the values need to be watchQuery instead of query
-fix query/watchQuery<any> >> <User>, not sure why the dance. there was an article on adding certain types to ng to have it not complain to ts about the results. Looked stupid at the time, but at least things were typed. maybe still typed, i..e maybe funciton still returns User[]?? Yes...so who cares then?
-* do a list/detail with the detail selected to something, then edit and the detail should automatically update if you watchQuery it and you're using just a typename:id cache key right? Hmm. Say you have a list, and click on something in that list and want to show it in detail... what to show? Before it was all in store so easy, just set store.selectedUser and use that. Hmmm, nice enough, but this is from query list and query list won't be updated if you change one? Funny that all their egs are of adding one and not of updating one. Maybe updating one updates any in the cache, no matter the query they come from??
-* httpInterceptor that looks for errors in gq responses (force errors to see what comes back)
+tasks
+* need to get running in watch mode for ui
+* get running on same server with express.static
 
 
-
-pass:
-you have add working but need to do update thing... BUT... that won't work till you have it all on watchQuery
-so you did everything with watchQuery, then do obs.first() in init (should work fine), then for some reason, resolve doesn't get called. When you do: query() resolve gets called, when you do watchQuery() it doesn't. What??
-Figure that out, then add update and verify:
-* init code doesnt' run on update
-* list code updates and watchQuery subs run again
-
-
-
-
-pass:
-have user using resolve to see users users and not hitting api for them.
-Next up: add with update section:
-* should update list
-* route change "should not call api then"
-// take out update section and verify it does call api to update, i.e. need the new one right? Make sure it works
-Then: delete, to see if it updates list or do you need an update in there as well? where you remove it from list?
-Then: update and verify the list gets updated.
-
-This whole logic is easier to see if you had one page that did this all, then the add/update/delete would fire off another next() to the list's watchQuery right? So you woudln't have to refresh the list, it would happen automatically.
-
-thing is: if you refreshed... should just get from cache anyway (which is what will happen in the routing version)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* use fragments for all your queries AND mutation responses, so you get the same values back from mutations to update your cache
-* don't order on server if you're adding on client (that's everything right?) so you can mutate/update for adds and still have them ordered. No more ordering pipes, so just order in subscribe then? No, do it in service, but then have to do it in list query and mutation/update query as well. But... only way right, so pop out of list/update calls and share between them.
-
-
-
-pass:
-did initialization with userService.getAllInit() to populate the cache, then apollo.getClient().readQuery for direct cache hit on resolve. It's a poc right? Anyway, goes to show you can get data upfront, then not worry about getting it again, even with a watchQuery. apollo.query makes no sense in this realm, watchQuery does as then your edit/adds will update cache and your users.getAll calls will have all the values. Hmmm, let's think about htis...
-
-so you have dan/carl/jim and you add mary and do a getall from cache and if you play your cards right, cache is: User:Id so getall doesn't hit server? How doews it know that someone else added jane? I get it: you add mary and no reason to hit server for more, but if they refresh page then will, but that's a reinit scenario. so data is stagnant in this realm... as it should be I suppose, though if they don't update for hours, they don't see other people's additions. That will cause problems. your current rest is: update locally, then update server, BUT... don't call getAll cause you're handling it locally (contacts-fe). So this is the same deal: You initialize, so list resolve calls cache only as data is always there initially and... updated as well. So let's roll with this, with hard cache gets, just to prove a point here: we don't hit server, But then... let's see if we do if changed to apollo.query...
-
-
-pass:
-have user list coming up with gq, now do the rest.
-keep in mind this query vs watchQuery. You want the latter I assume, but then you'd have to make that work to get rid of get rid of users.getAll call after eveyrthing? Hmm. But that's tied in to route changes and a resolve I think, so other stuff would have to change too. Might have to rethink routing on it then?
-
-
-first pass:
-get working with graphql (apollo.query woudl be appropriate here, but watchQuery will do I figure)
-
-second pass:
-push data up to store and everyone operates on store?? I.e. if data is up there in watchQueries (happens on init), then the crud all updates that data and no more data gets? Just add/edit and the list is updated via that? How does that go again? you have to rename the cache val so users would match something else??
-
-deal is: you need to understand watchquery better, how their caching affects you. first pass should be apollo.query. Then second pass should be watchQuery with intelligent caching.
 
