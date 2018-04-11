@@ -1,5 +1,23 @@
-## dk-crud - graphql branch
-This branch implements the ui/api using graphql. graphql.js on the backend and apollo client on the front.  
+
+# dk-crud-be
+
+The dk-crud project was an angular/cli project with an added node server, this combines both package.json files. This project separates the two with the backend server at the root of the project and a nested angular/cli application in the ui directory. The two projects are essentially isolated, making for easy updates to the angular app (something that happens every 6 months), and simplifying the server side packages as well. 
+
+### setup
+1. npm install
+2. run seed.bat at site root (to reset the mongodb local mongodb database with dkcrud database)
+3. node server/server.js to start server on 3005
+4. ng serve // for angular/cli ui on 4200
+
+to run on same server (how it will run in qa/prod:  
+  
+1. ng build // builds ui/dist directory for angular app
+2. node server/server.js to start server on 3005
+3. now both ui and api are served on 3005
+
+
+
+
   
 #### backend  
 graphql.js was used to implement the backend, notably the types, query, mutation and input objects, in grapthql object types with resolve functions. 
