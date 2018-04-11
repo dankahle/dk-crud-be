@@ -1,5 +1,0 @@
-
-
-class Test {
-  stuff = 'lala';
-}
