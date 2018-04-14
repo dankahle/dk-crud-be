@@ -8,6 +8,7 @@ import {Apollo} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular-link-http';
 import {defaultDataIdFromObject, InMemoryCache} from 'apollo-cache-inmemory';
 import { toIdValue } from 'apollo-utilities';
+import {environment} from '../../environments/environment';
 
 @NgModule({
   imports: [
@@ -29,7 +30,7 @@ export class CoreModule {
     apollo.create({
       // By default, this client will send queries to the
       // `/graphql` endpoint on the same host
-      link: httpLink.create({uri: 'http://localhost:3005/api/graphql'}),
+      link: httpLink.create({uri: environment.apiUrl + '/api/graphql'}),
       cache: new InMemoryCache({
         // dataIdFromObject: o => (<any>o).id,
         cacheRedirects: { // this doesn't work, the cache is still namespaced by query

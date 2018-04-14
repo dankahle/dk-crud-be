@@ -8,8 +8,6 @@ import {Observable} from 'rxjs/Observable';
 import '../../shared/observable-additions';
 import * as _ from 'lodash';
 
-const apiUrl = environment.apiUrl;
-
 @Injectable()
 export class UserService {
 
