@@ -1,5 +1,5 @@
 const _ = require('lodash'),
-  User = require('./model');
+  User = require('../../rest/user/model');
 
 exports.getAll = function ({skip, limit}) {
   const query = User.find();

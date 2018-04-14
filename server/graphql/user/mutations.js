@@ -4,7 +4,7 @@ const GraphQLID = graphql.GraphQLID;
 const GraphQLBoolean = graphql.GraphQLBoolean;
 const UserInput = require('./user-input');
 const User = require('./user');
-const repo = require('../../rest/user/repo');
+const repo = require('./repo');
 
 module.exports = {
 
